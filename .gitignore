@@ -30,3 +30,16 @@
 
 # docker image exports and other generated archives
 **/env/*.tar
+
+# keep local-only large artifacts out of Git while preserving them on disk
+pwn/SU_Box/attachments/pwn_deploy.zip
+pwn/SU_Chronos_Ring/attachments/attachments.zip
+pwn/SU_Chronos_Ring1/attachments/attachments1.zip
+web/SU_jdbc-master/attachments/web_deploy.zip
+web/SU_sqli/attachments/application.zip
+web/SU_wms/attachments/jeewms_580e924.zip
+web/SU_wms/env/jeewms.war
+re/SU_MvsicPlayer/attachments/SU_MusicPlayer.zip
+
+# local debug traces
+pwn/SU_EzRouter/src/www/.gdb_history
