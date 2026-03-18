@@ -1,0 +1,28 @@
+MB9 name=MirrorBus-9 ver=1 mode=half_duplex
+MB9_HINT cmd=HELP noecho=1
+> HELP
+INFO protocol=MirrorBus-9 noecho=queue_commit_poll
+INFO commands=HELP,STATUS,ENQ,ARM,COMMIT,POLL,RESET,PROVE,LIST,VER,PING,QUIT
+INFO enq_opcodes=INJ,ROT,MIX,BIAS,NOP,ARM
+OK cmd=HELP
+> STATUS
+OK cmd=STATUS tick=0 phase=0 qlen=0 backlog=0 cid=0 challenge=0 heartbeat=0
+> ENQ INJ 0 12
+QOK qid=1 opcode=INJ argc=2 qlen=1
+> ENQ ROT 1
+QOK qid=2 opcode=ROT argc=1 qlen=2
+> COMMIT
+COK cid=1 exec=2 produced=2 qlen=0 backlog=2 tick=2 phase=1
+> POLL 8
+POK requested=8 count=2 backlog=0 polls=1
+F cid=1 tick=0 lane=5 sig=31196 aux=42719 tag=OBS
+F cid=1 tick=1 lane=3 sig=212 aux=58020 tag=OBS
+END
+> ENQ ARM
+QOK qid=3 opcode=ARM argc=0 qlen=1
+> COMMIT
+COK cid=2 exec=1 produced=1 qlen=0 backlog=1 tick=3 phase=1
+> POLL 8
+POK requested=8 count=1 backlog=0 polls=2
+F cid=2 tick=2 lane=0 sig=30211 aux=654 tag=ARM_FAIL
+END

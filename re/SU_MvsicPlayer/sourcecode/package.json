@@ -1,0 +1,43 @@
+{
+  "name": "su-mvsicplayer",
+  "version": "0.1.0",
+  "description": "SUCTF2026 SU_MvsicPlayer Challenge",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:native": "node-gyp rebuild --directory native",
+    "dist:win": "npm run build:native && electron-builder --win nsis --x64"
+  },
+  "author": "",
+  "license": "MIT",
+  "build": {
+    "appId": "com.su.mvsicplayer",
+    "productName": "SU_MvsicPlayer",
+    "directories": {
+      "output": "dist"
+    },
+    "compression": "maximum",
+    "asar": true,
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/**/*",
+      "native/build/Release/*.node",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
+      "electronLanguages": ["zh-CN", "en-US"]
+    }
+  },
+  "devDependencies": {
+    "electron": "^36.0.0",
+    "electron-builder": "^24.13.3",
+    "node-gyp": "^11.2.0"
+  }
+}

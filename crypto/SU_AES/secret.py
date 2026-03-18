@@ -1,0 +1,1 @@
+flag = b'SUCTF{Th3_K3y_15_1n_7h3_S_80x}'

@@ -1,0 +1,32 @@
+2025-解题赛赛题模板/
+
+# macOS / editors
+.DS_Store
+**/.DS_Store
+**/.idea/
+**/.vscode/
+**/*.swp
+
+# common build caches
+**/__pycache__/
+**/.pytest_cache/
+**/.mypy_cache/
+**/.venv/
+**/venv/
+**/node_modules/
+**/dist/
+**/build/
+**/target/
+**/.gradle/
+**/.dart_tool/
+**/.cache/
+
+# runtime output
+**/logs/
+**/log/
+**/*.log
+**/tmp/
+**/uploads/
+
+# docker image exports and other generated archives
+**/env/*.tar

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CloudHook Service Debug Panel</title>
+  <style>
+    :root {
+      --bg-0: #0b132b;
+      --bg-1: #1c2541;
+      --bg-2: #3a506b;
+      --text: #f4f7fb;
+      --muted: #b8c4d9;
+      --accent: #5bc0be;
+      --danger: #ff6b6b;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 0% 0%, #1d2b64 0%, transparent 60%),
+        radial-gradient(900px 500px at 100% 100%, #0f3443 0%, transparent 55%),
+        linear-gradient(135deg, var(--bg-0), var(--bg-1), var(--bg-2));
+      display: grid;
+      place-items: center;
+      padding: 20px;
+    }
+
+    .panel {
+      width: min(760px, 100%);
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
+
+    p.sub {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 6px;
+      font-size: 0.92rem;
+      color: #d7e3f5;
+    }
+
+    input, textarea {
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(14, 24, 44, 0.65);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(91, 192, 190, 0.2);
+    }
+
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    button {
+      margin-top: 14px;
+      width: 100%;
+      border: 0;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #082324;
+      background: linear-gradient(120deg, #87f5f1, #5bc0be);
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 26px rgba(91, 192, 190, 0.35);
+    }
+
+    pre {
+      margin-top: 16px;
+      padding: 14px;
+      background: rgba(5, 10, 20, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      min-height: 80px;
+    }
+
+    .error { color: var(--danger); }
+  </style>
+</head>
+<body>
+  <div class="panel">
+    <h1>CloudHook Service</h1>
+    <p class="sub">Webhook forwarding debugger for CTF challenge simulation.</p>
+
+    <label for="url">Target URL</label>
+    <input id="url" placeholder="https://example.com/webhook" />
+
+    <label for="body">JSON Data (sent as request body)</label>
+    <textarea id="body" placeholder='{"event":"ping","from":"ctf-player"}'></textarea>
+
+    <button id="send">Send Webhook</button>
+    <pre id="output">Ready.</pre>
+  </div>
+
+  <script>
+    const sendBtn = document.getElementById('send');
+    const output = document.getElementById('output');
+
+    sendBtn.addEventListener('click', async () => {
+      const url = document.getElementById('url').value.trim();
+      const body = document.getElementById('body').value;
+
+      if (!url) {
+        output.classList.add('error');
+        output.textContent = 'Target URL is required.';
+        return;
+      }
+
+      output.classList.remove('error');
+      output.textContent = 'Sending...';
+
+      try {
+        const resp = await fetch('/api/webhook', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url, body })
+        });
+
+        const data = await resp.json();
+        output.textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        output.classList.add('error');
+        output.textContent = `Request failed: ${err}`;
+      }
+    });
+  </script>
+</body>
+</html>

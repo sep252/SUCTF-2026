@@ -1,0 +1,10 @@
+services:
+  artifact-online:
+    build:
+      context: ../sourcecode/server
+    image: artifact-online:latest
+    ports:
+      - "9999:9999"
+    environment:
+      FLAG: "SUCTF{Th1s_i5_@_Cub3_bu7_n0t_5ome7hing_u_pl4y}"
+    restart: unless-stopped

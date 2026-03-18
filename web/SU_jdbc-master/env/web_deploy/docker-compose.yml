@@ -1,0 +1,7 @@
+version: "3"
+services:
+  jdbc-master:
+    build: .
+    image: jdbc-master:latest
+    ports:
+      - "8080:8080"

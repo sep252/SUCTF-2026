@@ -1,0 +1,1 @@
+flag = b"SUCTF{Actu41ly_th1s_iS_4_Pr0blem_7hat_w4s_s0lved_1n_2023_https://eprint.iacr.org/2023/1409}"

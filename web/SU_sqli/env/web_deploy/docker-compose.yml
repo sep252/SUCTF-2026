@@ -1,0 +1,14 @@
+services:
+  su_sqli:
+    build: .
+    image: su_sqli:latest
+    environment:
+      PORT: 8080
+      POSTGRES_DB: ctf
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/ctf?sslmode=disable
+      SIGN_SECRET: suctf2026_sign_secret_change_me_32b
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
